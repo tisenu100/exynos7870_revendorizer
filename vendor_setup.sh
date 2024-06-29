@@ -7,6 +7,22 @@
 #	This raw bash script will apply most of the Exynos 7870 HAL from an OSRC ROM(Lineage 19.x) to any
 #	Exynos based vendor image. Currently OneUI 4.1 has been tested
 #
+#	NOTE: This will add the HAL files ONLY! You must do the rest of the changes yourself
+#	Made for research purposes only. Not for any serious task whatsoever!
+#
+
+# Vendor Interfaces to configure
+# sensorservice 1.0
+# graphics.composer 2.1
+# audio 7.0
+# audio.effect 7.0
+# camera.provider 2.4
+# gnss 2.0
+# graphics.composer 2.2
+# graphics.mapper 2.0
+# keymaster 4.0
+# nfc 1.2
+# sensors 1.0
 
 # Graphics
 sudo cp -a ./vendor_lineage/lib/hw/gralloc.exynos7870.so ./vendor/lib/hw/gralloc.exynos7870.so
@@ -41,6 +57,15 @@ sudo cp -a ./vendor_lineage/lib64/libhwcutils.so ./vendor/lib64
 sudo cp -a ./vendor_lineage/lib64/libion_exynos.so ./vendor/lib64
 sudo cp -a ./vendor_lineage/lib64/libmpp.so ./vendor/lib64
 
+# Keymaster
+sudo cp -a ./vendor_lineage/lib64/libkeymaster4.so ./vendor/lib64
+sudo cp -a ./vendor_lineage/lib64/libkeymaster4support.so ./vendor/lib64
+sudo cp -a ./vendor_lineage/lib64/libkeymaster_messages.so ./vendor/lib64
+sudo cp -a ./vendor_lineage/lib64/libkeymaster_portable.so ./vendor/lib64
+sudo cp -a ./vendor_lineage/lib64/libpuresoftkeymasterdevice.so ./vendor/lib64
+sudo cp -a ./vendor_lineage/bin/hw/android.hardware.keymaster@4.0-service ./vendor/bin/hw
+sudo cp -a ./vendor_lineage/etc/init/android.hardware.keymaster@4.0-service.rc ./vendor/etc/init
+
 # Mali
 sudo cp -a ./vendor_lineage/lib/egl/libGLES_mali.so ./vendor/lib/egl
 sudo cp -a ./vendor_lineage/lib64/egl/libGLES_mali.so ./vendor/lib64/egl
@@ -62,6 +87,41 @@ sudo cp -a ./vendor_lineage/lib/lib_SoundAlive_SRC384_ver320.so ./vendor/lib
 sudo cp -a ./vendor_lineage/lib/libtfa98xx.so ./vendor/lib
 sudo cp -a ./vendor_lineage/lib/libtinyalsa.so ./vendor/lib
 sudo cp -a ./vendor_lineage/lib/libvndsecril-client.so ./vendor/lib
+
+# Audio VINTF
+sudo cp -a ./vendor_lineage/lib/android.hardware.audio.common-util.so ./vendor/lib
+sudo cp -a ./vendor_lineage/lib/android.hardware.audio.common@5.0.so ./vendor/lib
+sudo cp -a ./vendor_lineage/lib/android.hardware.audio.common@7.0-enums.so ./vendor/lib
+sudo cp -a ./vendor_lineage/lib/android.hardware.audio.common@7.0-util.so ./vendor/lib
+sudo cp -a ./vendor_lineage/lib/android.hardware.audio.common@7.0.so ./vendor/lib
+sudo cp -a ./vendor_lineage/lib/android.hardware.audio.effect@7.0-util.so ./vendor/lib
+sudo cp -a ./vendor_lineage/lib/android.hardware.audio.effect@7.0.so ./vendor/lib
+sudo cp -a ./vendor_lineage/lib/android.hardware.audio@7.0-util.so ./vendor/lib
+sudo cp -a ./vendor_lineage/lib/android.hardware.audio@7.0.so ./vendor/lib
+sudo cp -a ./vendor_lineage/lib/hw/android.hardware.audio@7.0-impl.so ./vendor/lib
+sudo cp -a ./vendor_lineage/lib/hw/android.hardware.audio.effect@7.0-impl.so ./vendor/lib
+
+
+# Bluetooth
+sudo cp -a ./vendor_lineage/lib/libbt-vendor.so ./vendor/lib
+sudo cp -a ./vendor_lineage/lib/android.hardware.bluetooth.audio@2.0.so ./vendor/lib
+sudo cp -a ./vendor_lineage/lib/android.hardware.bluetooth.audio@2.1.so ./vendor/lib
+sudo cp -a ./vendor_lineage/lib/android.hardware.bluetooth@1.0.so ./vendor/lib
+sudo cp -a ./vendor_lineage/lib/hw/android.hardware.bluetooth@1.0-impl.so ./vendor/lib/hw
+sudo cp -a ./vendor_lineage/lib/hw/audio.bluetooth.default.so ./vendor/lib/hw
+sudo cp -a ./vendor_lineage/lib/hw/android.hardware.bluetooth.audio@2.0-impl.so ./vendor/lib/hw
+sudo cp -a ./vendor_lineage/lib/libbluetooth_audio_session.so ./vendor/lib
+sudo cp -a ./vendor_lineage/lib/vendor.samsung.hardware.bluetooth@2.0.so ./vendor/lib
+sudo cp -a ./vendor_lineage/lib64/android.hardware.bluetooth.audio@2.0.so ./vendor/lib64
+sudo cp -a ./vendor_lineage/lib64/android.hardware.bluetooth.audio@2.1.so ./vendor/lib64
+sudo cp -a ./vendor_lineage/lib64/android.hardware.bluetooth@1.0.so ./vendor/lib64
+sudo cp -a ./vendor_lineage/lib64/hw/audio.bluetooth.default.so ./vendor/lib64/hw
+sudo cp -a ./vendor_lineage/lib64/hw/android.hardware.bluetooth.audio@2.0-impl.so ./vendor/lib64/hw
+sudo cp -a ./vendor_lineage/lib64/libbluetooth_audio_session.so ./vendor/lib64
+sudo cp -a ./vendor_lineage/bin/hw/android.hardware.bluetooth@1.0-service ./vendor/bin/hw
+sudo cp -a ./vendor_lineage/etc/init/android.hardware.bluetooth@1.0-service.rc ./vendor/etc/init
+sudo cp -a ./vendor_lineage/lib64/libhwbinder.so ./vendor/lib64
+sudo cp -a ./vendor_lineage/lib/libhwbinder.so ./vendor/lib
 
 # Camera
 sudo cp -a ./vendor_lineage/lib/hw/camera.exynos7870.so ./vendor/lib/hw/camera.exynos7870.so
@@ -108,16 +168,16 @@ sudo cp -a ./vendor_lineage/lib64/hw/thermal.universal7870.so ./vendor/lib64/hw/
 
 #GPS
 sudo cp -a ./vendor_lineage/bin/hw/gpsd ./vendor/bin/hw
-#sudo cp -a ./vendor_lineage/bin/hw/vendor.samsung.hardware.gnss@2.0-service
+sudo cp -a ./vendor_lineage/bin/hw/vendor.samsung.hardware.gnss@2.0-service
 sudo cp -a ./vendor_lineage/etc/gnss/ca.pem ./vendor/etc/gnss
 sudo cp -a ./vendor_lineage/etc/gnss/gps.cfg ./vendor/etc/gnss
 sudo cp -a ./vendor_lineage/etc/init/init.gps.rc ./vendor/etc/init
-#sudo cp -a ./vendor_lineage/etc/init/vendor.samsung.hardware.gnss@2.0-service.rc
-#sudo cp -a ./vendor_lineage/lib/vendor.samsung.hardware.gnss@2.0.so
-#sudo cp -a ./vendor_lineage/lib64/hw/android.hardware.gnss@2.0-impl.so
-#sudo cp -a ./vendor_lineage/vendor/lib64/hw/vendor.samsung.hardware.gnss@2.0-impl.so
+sudo cp -a ./vendor_lineage/etc/init/vendor.samsung.hardware.gnss@2.0-service.rc
+sudo cp -a ./vendor_lineage/lib/vendor.samsung.hardware.gnss@2.0.so
+sudo cp -a ./vendor_lineage/lib64/hw/android.hardware.gnss@2.0-impl.so
+sudo cp -a ./vendor_lineage/vendor/lib64/hw/vendor.samsung.hardware.gnss@2.0-impl.so
 sudo cp -a ./vendor_lineage/lib64/libwrappergps.so ./vendor/lib64
-#sudo cp -a ./vendor_lineage/lib64/vendor.samsung.hardware.gnss@2.0.so
+sudo cp -a ./vendor_lineage/lib64/vendor.samsung.hardware.gnss@2.0.so
 
 
 # RIL
@@ -157,9 +217,9 @@ sudo cp -a ./vendor_lineage/lib/hw/android.hardware.sensors@1.0-impl.universal78
 sudo cp -a ./vendor_lineage/lib/hw/sensors.universal7870.so ./vendor/lib
 sudo cp -a ./vendor_lineage/lib64/android.frameworks.sensorservice@1.0.so ./vendor/lib
 sudo cp -a ./vendor_lineage/lib64/android.hardware.sensors@1.0.so ./vendor/lib
-sudo cp -a ./vendor_lineage/bin/hw/android.hardware.sensors@1.0-service ./vendor/lib
-sudo cp -a ./vendor_lineage/bin/hw/android.hardware.sensors@1.0-service.universal7870 ./vendor/lib
-sudo cp -a ./vendor_lineage/etc/init/android.hardware.sensors@1.0-service.universal7870.rc ./vendor/lib
+sudo cp -a ./vendor_lineage/bin/hw/android.hardware.sensors@1.0-service ./vendor/bin/hw
+sudo cp -a ./vendor_lineage/bin/hw/android.hardware.sensors@1.0-service.universal7870 ./vendor/bin/hw
+sudo cp -a ./vendor_lineage/etc/init/android.hardware.sensors@1.0-service.universal7870.rc ./vendor/etc
 
 # mcRegistry
 sudo cp -a ./vendor_lineage/app/mcRegistry/* ./vendor/app/mcRegistry
@@ -189,7 +249,7 @@ sudo cp -a ./vendor_lineage/etc/mixer_gains.xml ./vendor/etc
 sudo cp -a ./vendor_lineage/etc/mixer_paths.xml ./vendor/etc
 
 # FSTAB
-#sudo cp -a ./vendor_lineage/etc/fstab.samsungexynos7870 ./vendor/etc
+sudo cp -a ./vendor_lineage/etc/fstab.samsungexynos7870 ./vendor/etc
 
 # ueventd
 sudo cp -a ./vendor_lineage/etc/ueventd.rc ./vendor
@@ -198,7 +258,8 @@ sudo cp -a ./vendor_lineage/etc/ueventd.rc ./vendor
 sudo cp -a ./vendor_lineage/etc/seccomp_policy/* ./vendor/etc/seccomp_policy
 
 # Keys
-sudo cp -a ./vendor_lineage/usr/keylayout/* ./vendor/usr/keylayout
+# NOTE: Usually not needed when dealing with Samsung Vendor Images
+# sudo cp -a ./vendor_lineage/usr/keylayout/* ./vendor/usr/keylayout
 
 # Vendor Fixes
 sudo cp ./fixes/gatekeeper.exynos7870.so ./vendor/lib64/hw
@@ -207,16 +268,20 @@ sudo chcon u:object_r:vendor_file:s0 ./vendor/lib64/hw/gatekeeper.exynos7870.so
 sudo cp ./fixes/libMcClient.so ./vendor/lib64
 sudo chcon u:object_r:vendor_file:s0 ./vendor/lib64/libMcClient.so
 
+# NOTE: 32-Bit Samsung Camera Interface for OneUI ROMS
 #sudo cp ./fixes/vendor.samsung.hardware.camera.provider@4.0-service ./vendor/bin/hw
 #sudo chcon u:object_r:hal_camera_default_exec:s0 ./vendor/bin/hw/vendor.samsung.hardware.camera.provider@4.0-service
 
 #sudo cp ./fixes/vendor.samsung.hardware.camera.provider@4.0-service.rc ./vendor/etc/init
 #sudo chcon u:object_r:vendor_configs_file:s0 ./vendor/etc/init/vendor.samsung.hardware.camera.provider@4.0-service.rc
 
+# NOTE: Patch hwcomposer.exynos7870.so libhwcutils.so libexynosdisplay.so & libhwc2on1adapter.so to use that library
+# instead of normal libutils.so for Android 13+ ROMS
 #sudo cp ./fixes/libutils.so ./vendor/lib64/libutils-v30.so
 #sudo chcon u:object_r:vendor_file:s0 ./vendor/lib64/libutils-v30.so
 
 # Fstab
+# NOTE: For OneUI roms as they expect a super partition
 sudo cp ./fixes/fstab.samsungexynos7870 ./vendor/etc
 sudo chcon u:object_r:vendor_configs_file:s0 ./vendor/etc/fstab.samsungexynos7870
 
