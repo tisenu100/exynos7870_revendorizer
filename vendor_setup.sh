@@ -249,7 +249,7 @@ sudo cp -a ./vendor_lineage/etc/mixer_gains.xml ./vendor/etc
 sudo cp -a ./vendor_lineage/etc/mixer_paths.xml ./vendor/etc
 
 # FSTAB
-sudo cp -a ./vendor_lineage/etc/fstab.samsungexynos7870 ./vendor/etc
+# sudo cp -a ./vendor_lineage/etc/fstab.samsungexynos7870 ./vendor/etc
 
 # ueventd
 sudo cp -a ./vendor_lineage/etc/ueventd.rc ./vendor
