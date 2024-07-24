@@ -277,16 +277,23 @@ sudo cp ./fixes/libMcClient.so ./vendor/lib64
 sudo chcon u:object_r:vendor_file:s0 ./vendor/lib64/libMcClient.so
 
 # NOTE: 32-Bit Samsung non-Unihal Camera Interface for OneUI ROMS
-sudo cp ./fixes/vendor.samsung.hardware.camera.provider@4.0-service ./vendor/bin/hw
+#sudo cp ./fixes/vendor.samsung.hardware.camera.provider@4.0-service ./vendor/bin/hw
+#sudo cp ./fixes/lib/*camera* ./vendor/lib
+#sudo cp ./fixes/lib64/*camera* ./vendor/lib64
+#sudo chcon u:object_r:hal_camera_default_exec:s0 ./vendor/bin/hw/vendor.samsung.hardware.camera.provider@4.0-service
+#sudo chmod 775 ./vendor/bin/hw/vendor.samsung.hardware.camera.provider@4.0-service
+#sudo chgrp 2000 ./vendor/bin/hw/vendor.samsung.hardware.camera.provider@4.0-service
+#sudo cp ./fixes/vendor.samsung.hardware.camera.provider@4.0-service.rc ./vendor/etc/init
+#sudo chcon u:object_r:vendor_configs_file:s0 ./vendor/etc/init/vendor.samsung.hardware.camera.provider@4.0-service.rc
+
+# NOTE: 32-Bit Samsung Camera Interface for OneUI ROMS
+sudo cp ./fixes/a12/vendor.samsung.hardware.camera.provider@4.0-service ./vendor/bin/hw
 sudo cp ./fixes/lib/*camera* ./vendor/lib
 sudo cp ./fixes/lib64/*camera* ./vendor/lib64
 sudo chcon u:object_r:hal_camera_default_exec:s0 ./vendor/bin/hw/vendor.samsung.hardware.camera.provider@4.0-service
-sudo chmod 775 ./vendor/bin/hw/vendor.samsung.hardware.camera.provider@4.0-service
-sudo chgrp 2000 ./vendor/bin/hw/vendor.samsung.hardware.camera.provider@4.0-service
-
-
-sudo cp ./fixes/vendor.samsung.hardware.camera.provider@4.0-service.rc ./vendor/etc/init
+sudo cp ./fixes/a12/vendor.samsung.hardware.camera.provider@4.0-service.rc ./vendor/etc/init
 sudo chcon u:object_r:vendor_configs_file:s0 ./vendor/etc/init/vendor.samsung.hardware.camera.provider@4.0-service.rc
+
 
 # 64-Bit Gatekeeper driver
 #sudo cp ./fixes/gatekeeper.exynos7870.so ./vendor/lib64
